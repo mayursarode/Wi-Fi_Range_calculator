@@ -1,0 +1,376 @@
+<div id="sarode-wifi-calc-wrapper">
+    <style>
+        #sarode-wifi-calc-wrapper { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; border-radius: 8px; }
+        #sarode-wifi-calc-wrapper .header-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        #sarode-wifi-calc-wrapper .header-titles h2 { margin: 0 0 5px 0; }
+        #sarode-wifi-calc-wrapper .header-titles p { margin: 0; color: #55f; }
+        #sarode-wifi-calc-wrapper .header-titles a { color: #007bff; text-decoration: none; font-weight: bold; }
+        #sarode-wifi-calc-wrapper .header-titles a:hover { text-decoration: underline; }
+        #sarode-wifi-calc-wrapper .logo-container img { max-height: 50px; width: auto; display: block; }
+        #sarode-wifi-calc-wrapper .container { display: flex; flex-wrap: wrap; gap: 20px; }
+        #sarode-wifi-calc-wrapper .controls { flex: 1; min-width: 250px; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #sarode-wifi-calc-wrapper .graph-container { flex: 3; min-width: 400px; height: 500px; position: relative; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #sarode-wifi-calc-wrapper .form-group { margin-bottom: 15px; }
+        #sarode-wifi-calc-wrapper label { display: block; margin-bottom: 5px; font-weight: bold; }
+        #sarode-wifi-calc-wrapper select, #sarode-wifi-calc-wrapper input { width: 100%; padding: 8px; box-sizing: border-box; }
+        #sarode-wifi-calc-wrapper .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        #sarode-wifi-calc-wrapper button { flex: 1; padding: 10px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        #sarode-wifi-calc-wrapper .btn-submit { background: #007bff; color: #fff; }
+        #sarode-wifi-calc-wrapper .btn-clear { background: #dc3545; color: #fff; }
+        #sarode-wifi-calc-wrapper .results-box { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 20px; }
+        #sarode-wifi-calc-wrapper .validation-msg { margin-top: 10px; font-weight: bold; min-height: 20px; }
+        #sarode-wifi-calc-wrapper .calc-notes { background: #fff; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 20px; font-size: 14px; color: #333; line-height: 1.5; }
+        #sarode-wifi-calc-wrapper .calc-notes h4 { margin-top: 0; margin-bottom: 10px; color: #111; }
+        #sarode-wifi-calc-wrapper .calc-notes ol { padding-left: 20px; margin: 0; }
+        #sarode-wifi-calc-wrapper .calc-notes li { margin-bottom: 6px; }
+    </style>
+
+    <!-- Load Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="header-container">
+        <div class="header-titles">
+            <h2>Wi-Fi Coverage & Range Calculator</h2>
+            <p>Hosted by <a href="https://www.sarodeoverwireless.com" target="_blank">Sarode Over Wireless</a></p>
+        </div>
+        <div class="logo-container">
+            <a href="https://www.sarodeoverwireless.com" target="_blank">
+                <img src="https://www.sarodeoverwireless.com/logo.png" alt="Sarode Over Wireless Logo" onerror="this.style.display='none'">
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Input Controls -->
+        <div class="controls">
+            <h3>Radio parameters</h3>
+            <div class="form-group">
+                <label for="Wi-Fi_standard">Wi-Fi Standard:</label>
+                <select id="Wi-Fi_standard">
+                    <option value="n">802.11n</option>
+                    <option value="ac">802.11ac</option>
+                    <option value="ax" selected>802.11ax</option>
+                    <option value="be">802.11be</option>
+                </select>
+                
+                <label for="Wi-Fi_frequency">Frequency Band:</label>
+                <select id="Wi-Fi_frequency">
+                    <option value="2.4">2.4 GHz</option>
+                    <option value="5.2" selected>5.2 GHz</option>
+                    <option value="5.8">5.8 GHz</option>
+                    <option value="6">6 GHz</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Wi-Fi_bandwidth">Operating Bandwidth:</label>
+                <select id="Wi-Fi_bandwidth">
+                    <option value="20">20 MHz</option>
+                    <option value="40">40 MHz</option>
+                    <option value="80" selected>80 MHz</option>
+                    <option value="160">160 MHz</option>
+                    <option value="320">320 MHz</option>
+                </select>
+            </div>
+
+            <h3>Channel parameters</h3>
+            <div class="form-group">
+                <label for="ap_mimo">AP MIMO Streams:</label>
+                <select id="ap_mimo">
+                    <option value="1">1 Stream</option>
+                    <option value="2" selected>2 Streams</option>
+                    <option value="3">3 Streams</option>
+                    <option value="4">4 Streams</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ap_distance">Distance from AP (m):</label>
+                <input type="number" id="ap_distance" value="10" min="1" max="100">
+            </div>
+            <div class="form-group">
+                <label for="Wi-Fi_fading">Fading Margin:</label>
+                <select id="Wi-Fi_fading">
+                    <option value="10">10 dB (90% Reliability)</option>
+                    <option value="20" selected>20 dB (99% Reliability)</option>
+                    <option value="30">30 dB (99.9% Reliability)</option>
+                    <option value="40">40 dB (99.99% Reliability)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Wi-Fi_environment">Environment Type:</label>
+                <select id="Wi-Fi_environment">
+                    <option value="3" selected>Office (n=3.0)</option>
+                    <option value="3.3">Environment (n=3.3)</option>
+                    <option value="3.5">Home (n=3.5)</option>
+                </select>
+            </div>
+            <div id="radio_validation_msg" class="validation-msg"></div>
+            <div class="btn-group">
+                <button type="button" class="btn-submit" onclick="submitSarodeCalculator()">Plot / Submit</button>
+                <button type="button" class="btn-clear" onclick="clearSarodeChart()">Clear Graph</button>
+            </div>
+        </div>
+        
+        <!-- Graph Display -->
+        <div class="graph-container">
+            <canvas id="sarodeWifiChart" style="width: 100%; height: 100%;"></canvas>
+        </div>
+    </div>
+
+    <div class="results-box">
+        <h3 id="results_title">Estimated Link Performance at <span id="display_distance">10</span>m Range</h3>
+        <p id="sarode_results_text">Configure parameters and click Submit to plot.</p>
+    </div>
+
+    <!-- Notes Below the Graph -->
+    <div class="calc-notes">
+        <h4>Calculation Notes:</h4>
+        <ol>
+            <li>These graphs are theoretical calculation for best case Wi-Fi MIMO TCP throughput.</li>
+            <li>TCP throughput efficiency of 70% calculation (considering NWK/MAC and PHY losses).</li>
+            <li>Fading margin and reliability values shown in table: 10 dB (90%), 20 dB (99%), 30 dB (99.9%), 40 dB (99.99%).</li>
+            <li>Path loss calculated by breakpoint model, n=2 up to 1m and then n=3, 3.3, or 3.5 based on environment.</li>
+        </ol>
+    </div>
+
+    <script>
+        let sarodeChart;
+        const chartColors = [
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(153, 102, 255, 1)'
+        ];
+
+        const phyTables = {
+            'ac20': { data: [{tx: 15.0, sens: -95.0, rate: 6.5}, {tx: 14.0, sens: -92.5, rate: 13.0}, {tx: 14.0, sens: -89.5, rate: 19.5}, {tx: 14.0, sens: -86.5, rate: 26.0}, {tx: 14.0, sens: -83.0, rate: 39.0}, {tx: 14.0, sens: -78.5, rate: 52.0}, {tx: 14.0, sens: -77.0, rate: 58.5}, {tx: 14.0, sens: -76.5, rate: 65.0}, {tx: 14.0, sens: -71.5, rate: 78.0}, {tx: 14.0, sens: -70.0, rate: 90.0}] },
+            'ac40': { data: [{tx: 15.0, sens: -92.0, rate: 13.5}, {tx: 14.0, sens: -88.5, rate: 27.0}, {tx: 14.0, sens: -85.5, rate: 40.5}, {tx: 14.0, sens: -83.0, rate: 54.0}, {tx: 14.0, sens: -79.0, rate: 81.0}, {tx: 14.0, sens: -76.5, rate: 108.0}, {tx: 14.0, sens: -74.5, rate: 121.5}, {tx: 14.0, sens: -72.5, rate: 135.0}, {tx: 14.0, sens: -69.0, rate: 162.0}, {tx: 14.0, sens: -67.0, rate: 180.0}] },
+            'ac80': { data: [{tx: 15.0, sens: -89.0, rate: 29.3}, {tx: 14.0, sens: -86.0, rate: 58.5}, {tx: 14.0, sens: -83.5, rate: 87.8}, {tx: 14.0, sens: -81.0, rate: 117.0}, {tx: 14.0, sens: -76.6, rate: 175.5}, {tx: 21.0, sens: -73.0, rate: 234.0}, {tx: 20.0, sens: -71.6, rate: 263.3}, {tx: 19.0, sens: -69.5, rate: 292.5}, {tx: 19.0, sens: -65.0, rate: 351.0}, {tx: 18.0, sens: -64.0, rate: 390.0}] },
+            'ax20': { data: [{tx: 21.0, sens: -94.0, rate: 8.6}, {tx: 21.0, sens: -91.0, rate: 17.2}, {tx: 21.0, sens: -89.0, rate: 25.8}, {tx: 21.0, sens: -86.0, rate: 34.4}, {tx: 21.0, sens: -82.5, rate: 51.0}, {tx: 21.0, sens: -80.0, rate: 68.8}, {tx: 21.0, sens: -77.0, rate: 77.4}, {tx: 21.0, sens: -76.0, rate: 86.0}, {tx: 21.0, sens: -73.0, rate: 103.2}, {tx: 20.0, sens: -71.0, rate: 114.7}, {tx: 18.0, sens: -67.5, rate: 129.0}, {tx: 18.0, sens: -66.0, rate: 143.4}] },
+            'ax40': { data: [{tx: 21.0, sens: -91.0, rate: 17.2}, {tx: 21.0, sens: -88.0, rate: 34.4}, {tx: 21.0, sens: -85.5, rate: 51.0}, {tx: 21.0, sens: -83.5, rate: 68.8}, {tx: 21.0, sens: -80.0, rate: 103.2}, {tx: 21.0, sens: -77.0, rate: 137.6}, {tx: 21.0, sens: -74.0, rate: 154.9}, {tx: 21.0, sens: -73.0, rate: 172.1}, {tx: 20.0, sens: -70.0, rate: 206.5}, {tx: 20.0, sens: -68.0, rate: 229.4}, {tx: 18.0, sens: -65.0, rate: 258.1}, {tx: 18.0, sens: -64.0, rate: 286.8}] },
+            'ax80': { data: [{tx: 21.0, sens: -88.0, rate: 36.0}, {tx: 21.0, sens: -85.0, rate: 72.1}, {tx: 21.0, sens: -83.0, rate: 108.1}, {tx: 21.0, sens: -81.0, rate: 144.1}, {tx: 21.0, sens: -77.0, rate: 215.2}, {tx: 21.0, sens: -74.0, rate: 288.2}, {tx: 21.0, sens: -72.0, rate: 324.3}, {tx: 21.0, sens: -70.0, rate: 360.4}, {tx: 20.0, sens: -67.0, rate: 432.4}, {tx: 18.0, sens: -64.0, rate: 480.4}, {tx: 18.0, sens: -61.0, rate: 540.4}, {tx: 18.0, sens: -59.0, rate: 600.0}] },
+            'ax160': { data: [{tx: 21.0, sens: -85.0, rate: 72.0}, {tx: 21.0, sens: -82.5, rate: 144.2}, {tx: 21.0, sens: -80.0, rate: 216.2}, {tx: 21.0, sens: -77.0, rate: 288.2}, {tx: 21.0, sens: -74.0, rate: 432.4}, {tx: 21.0, sens: -71.0, rate: 576.4}, {tx: 21.0, sens: -70.0, rate: 648.6}, {tx: 21.0, sens: -68.0, rate: 720.8}, {tx: 20.0, sens: -65.0, rate: 864.8}, {tx: 19.0, sens: -63.0, rate: 960.8}, {tx: 18.0, sens: -57.5, rate: 1080.8}, {tx: 18.0, sens: -56.0, rate: 1201.0}] },
+            'be20': { data: [{tx: 21.0, sens: -94.0, rate: 8.6}, {tx: 21.0, sens: -91.0, rate: 17.2}, {tx: 21.0, sens: -89.0, rate: 25.8}, {tx: 21.0, sens: -86.0, rate: 34.4}, {tx: 21.0, sens: -82.5, rate: 51.0}, {tx: 21.0, sens: -80.0, rate: 68.8}, {tx: 21.0, sens: -77.0, rate: 77.4}, {tx: 21.0, sens: -76.0, rate: 86.0}, {tx: 21.0, sens: -73.0, rate: 103.2}, {tx: 20.0, sens: -71.0, rate: 114.7}, {tx: 18.0, sens: -67.5, rate: 120.0}, {tx: 18.0, sens: -62.0, rate: 143.4}, {tx: 18.0, sens: -59.0, rate: 154.3}, {tx: 18.0, sens: -58.0, rate: 172.1}] },
+            'be40': { data: [{tx: 21.0, sens: -91.0, rate: 17.2}, {tx: 21.0, sens: -88.0, rate: 34.4}, {tx: 21.0, sens: -85.5, rate: 51.0}, {tx: 21.0, sens: -83.5, rate: 68.8}, {tx: 21.0, sens: -80.0, rate: 103.2}, {tx: 21.0, sens: -77.0, rate: 137.6}, {tx: 21.0, sens: -74.0, rate: 154.9}, {tx: 21.0, sens: -73.0, rate: 172.1}, {tx: 20.0, sens: -70.0, rate: 206.5}, {tx: 20.0, sens: -68.0, rate: 229.4}, {tx: 18.0, sens: -65.0, rate: 258.1}, {tx: 18.0, sens: -64.0, rate: 286.8}, {tx: 18.0, sens: -58.0, rate: 309.7}, {tx: 18.0, sens: -55.0, rate: 344.1}] },
+            'be80': { data: [{tx: 21.0, sens: -89.0, rate: 36.0}, {tx: 21.0, sens: -86.0, rate: 72.1}, {tx: 21.0, sens: -83.0, rate: 108.1}, {tx: 21.0, sens: -81.0, rate: 144.1}, {tx: 21.0, sens: -77.0, rate: 215.2}, {tx: 21.0, sens: -74.0, rate: 288.2}, {tx: 21.0, sens: -72.0, rate: 324.3}, {tx: 21.0, sens: -70.0, rate: 360.4}, {tx: 20.0, sens: -67.0, rate: 432.4}, {tx: 18.0, sens: -64.0, rate: 480.4}, {tx: 18.0, sens: -61.0, rate: 540.4}, {tx: 18.0, sens: -59.0, rate: 600.0}] },
+            'be160': { data: [{tx: 21.0, sens: -85.0, rate: 72.0}, {tx: 21.0, sens: -82.5, rate: 144.2}, {tx: 21.0, sens: -80.0, rate: 216.2}, {tx: 21.0, sens: -77.0, rate: 288.2}, {tx: 21.0, sens: -74.0, rate: 432.4}, {tx: 21.0, sens: -71.0, rate: 576.4}, {tx: 21.0, sens: -70.0, rate: 648.6}, {tx: 21.0, sens: -68.0, rate: 720.8}, {tx: 20.0, sens: -65.0, rate: 864.8}, {tx: 20.0, sens: -63.0, rate: 960.8}, {tx: 18.0, sens: -57.5, rate: 1080.8}, {tx: 18.0, sens: -54.5, rate: 1201.0}, {tx: 18.0, sens: -51.5, rate: 1297.0}, {tx: 18.0, sens: -48.5, rate: 1441.9}] },
+            'be320': { data: [{tx: 21.0, sens: -82.0, rate: 144.1}, {tx: 21.0, sens: -79.5, rate: 288.2}, {tx: 21.0, sens: -77.0, rate: 432.2}, {tx: 21.0, sens: -74.0, rate: 576.5}, {tx: 21.0, sens: -71.0, rate: 864.7}, {tx: 20.0, sens: -67.0, rate: 1152.9}, {tx: 20.0, sens: -64.5, rate: 1297.1}, {tx: 20.0, sens: -62.0, rate: 1441.2}, {tx: 20.0, sens: -59.5, rate: 1729.4}, {tx: 19.0, sens: -58.5, rate: 1921.6}, {tx: 19.0, sens: -52.5, rate: 2161.8}, {tx: 18.0, sens: -51.0, rate: 2402.0}, {tx: 18.0, sens: -48.5, rate: 2594.1}, {tx: 18.0, sens: -45.5, rate: 2882.4}] }
+        };
+
+        function validateConfiguration(std, freq, bw) {
+            let f = parseFloat(freq);
+            let b = parseInt(bw);
+
+            if (f === 2.4) {
+                if (b > 40) return false;
+            } else if (f === 5.2 || f === 5.8) {
+                if (std === 'n') return false;
+                if (std === 'ac' && b > 80) return false;
+                if (std === 'ax' && b > 160) return false;
+            } else if (f === 6) {
+                if (std === 'n' || std === 'ac') return false;
+                if (std === 'ax' && b > 160) return false;
+            }
+            return true;
+        }
+
+        function getTableKey(std, bw) {
+            let key = std + bw;
+            if (phyTables[key]) return key;
+            return 'ax80';
+        }
+
+        function getThroughputAndTx(rssi, standardKey, mimoStreams) {
+            let table = phyTables[standardKey].data;
+            let bestThroughput = 0;
+            let matchedTx = table[0].tx;
+
+            for (let i = 0; i < table.length; i++) {
+                if (rssi >= table[i].sens) {
+                    let phyRate = table[i].rate * mimoStreams;
+                    bestThroughput = phyRate * 0.70;
+                    matchedTx = table[i].tx;
+                }
+            }
+            return { bestThroughput, matchedTx };
+        }
+
+        function calculateBreakpointPathLoss(freqMHz, distance, n) {
+            let pl1m = 20 * Math.log10(freqMHz) - 27.55;
+            if (distance <= 1) {
+                return pl1m + (20 * Math.log10(distance)); // n = 2 up to 1m
+            } else {
+                let pl1m_n2 = pl1m; 
+                return pl1m_n2 + (10 * n * Math.log10(distance)); // beyond 1m uses environment n
+            }
+        }
+
+        function calculateSarodeChartData(freq, n, fading, standardKey, mimoStreams) {
+            let trialTx = phyTables[standardKey].data[0].tx;
+            let table = phyTables[standardKey].data;
+            let minSens = table[0].sens; 
+            let f_MHz = freq * 1000;
+
+            let scatterPoints = [];
+            let currentDist = 1;
+
+            while (true) {
+                let pathLoss = calculateBreakpointPathLoss(f_MHz, currentDist, n);
+                let rssi = trialTx - pathLoss - fading;
+                let linkMatch = getThroughputAndTx(rssi, standardKey, mimoStreams);
+                
+                scatterPoints.push({
+                    x: parseFloat(rssi.toFixed(2)),
+                    y: parseFloat(linkMatch.bestThroughput.toFixed(2))
+                });
+
+                if (rssi <= minSens) {
+                    break;
+                }
+                currentDist += 1;
+            }
+
+            return { scatterPoints, activeTx: trialTx };
+        }
+
+        function initSarodeChart() {
+            const ctx = document.getElementById('sarodeWifiChart').getContext('2d');
+
+            sarodeChart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets: [] },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { 
+                            display: true,
+                            labels: {
+                                filter: function(legendItem, data) {
+                                    return !legendItem.text.includes('Marker');
+                                }
+                            }
+                        } 
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: { display: true, text: 'RSSI (dBm)' },
+                            min: -100, max: -50,
+                            reverse: true,
+                            grid: { minor: { display: true } },
+                            ticks: { minor: { display: true } }
+                        },
+                        y: {
+                            title: { display: true, text: 'TCP throughput (Mbps)' },
+                            beginAtZero: true,
+                            grid: { minor: { display: true } },
+                            ticks: { minor: { display: true } }
+                        }
+                    }
+                }
+            });
+
+            submitSarodeCalculator();
+        }
+
+        function submitSarodeCalculator() {
+            let std = document.getElementById('Wi-Fi_standard').value;
+            let freq = document.getElementById('Wi-Fi_frequency').value;
+            let bw = document.getElementById('Wi-Fi_bandwidth').value;
+            let validationMsgElem = document.getElementById('radio_validation_msg');
+            let textElem = document.getElementById('sarode_results_text');
+            let displayDistElem = document.getElementById('display_distance');
+
+            if (!validateConfiguration(std, freq, bw)) {
+                validationMsgElem.innerHTML = `<span style="color: red;">This configuration is not valid</span>`;
+                textElem.innerHTML = `<span style="color: red;">Selection of operating bandwidth, Wi-Fi standard, and frequency is not valid.</span>`;
+                return;
+            } else {
+                validationMsgElem.innerHTML = `<span style="color: green;">Configuration valid</span>`;
+            }
+
+            let standardKey = getTableKey(std, bw);
+            let fVal = parseFloat(freq);
+            let n = parseFloat(document.getElementById('Wi-Fi_environment').value);
+            let fading = parseFloat(document.getElementById('Wi-Fi_fading').value);
+            let mimoStreams = parseInt(document.getElementById('ap_mimo').value);
+            let distance = parseFloat(document.getElementById('ap_distance').value) || 10;
+
+            displayDistElem.innerText = distance;
+
+            let chartData = calculateSarodeChartData(fVal, n, fading, standardKey, mimoStreams);
+            let labelName = `${std.toUpperCase()} ${bw}MHz (${freq}GHz, ${mimoStreams}x MIMO)`;
+
+            // Prevent duplicate plots: update existing curve if present
+            let existingIndex = sarodeChart.data.datasets.findIndex(ds => ds.label === labelName);
+            let color;
+
+            if (existingIndex !== -1) {
+                color = sarodeChart.data.datasets[existingIndex].borderColor;
+                sarodeChart.data.datasets[existingIndex].data = chartData.scatterPoints;
+                
+                // Clear old marker dataset associated with this configuration
+                sarodeChart.data.datasets = sarodeChart.data.datasets.filter(ds => ds.label !== `${distance}m Marker (${labelName})`);
+            } else {
+                let datasetIndex = sarodeChart.data.datasets.filter(ds => !ds.label.includes('Marker')).length;
+                color = chartColors[datasetIndex % chartColors.length];
+
+                sarodeChart.data.datasets.push({
+                    label: labelName,
+                    data: chartData.scatterPoints,
+                    borderColor: color,
+                    backgroundColor: color.replace('1)', '0.1)'),
+                    borderWidth: 2,
+                    fill: false,
+                    stepped: true
+                });
+            }
+
+            // Calculate RSSI at custom distance using breakpoint model
+            let f_MHz = fVal * 1000;
+            let pathLossAtDist = calculateBreakpointPathLoss(f_MHz, distance, n);
+            let rssiCustomDist = chartData.activeTx - pathLossAtDist - fading;
+            let linkMatch = getThroughputAndTx(rssiCustomDist, standardKey, mimoStreams);
+
+            // Push dotted red cross marker dataset
+            sarodeChart.data.datasets.push({
+                label: `${distance}m Marker (${labelName})`,
+                data: [{x: rssiCustomDist, y: linkMatch.bestThroughput}],
+                borderColor: 'rgba(255, 0, 0, 1)',
+                backgroundColor: 'rgba(255, 0, 0, 1)',
+                pointStyle: 'crossRot',
+                pointRadius: 8,
+                pointBorderWidth: 3,
+                showLine: true,
+                borderDash: [4, 4],
+                borderWidth: 2,
+                fill: false
+            });
+
+            sarodeChart.update();
+
+            if (linkMatch.bestThroughput > 0) {
+                textElem.innerHTML = `Plotted "${labelName}".<br>At ${distance}m range: Estimated RSSI is <strong>${rssiCustomDist.toFixed(2)} dBm</strong>, Tx Power: <strong>${linkMatch.matchedTx} dBm</strong>, Estimated TCP Throughput: <span style="color: green; font-weight: bold;">${linkMatch.bestThroughput.toFixed(2)} Mbps</span>`;
+            } else {
+                textElem.innerHTML = `Plotted "${labelName}".<br>At ${distance}m range: Estimated RSSI is <strong>${rssiCustomDist.toFixed(2)} dBm</strong> (Out of range)`;
+            }
+        }
+
+        function clearSarodeChart() {
+            if (sarodeChart) {
+                sarodeChart.data.datasets = [];
+                sarodeChart.update();
+            }
+            document.getElementById('sarode_results_text').innerHTML = "Graph cleared. Configure parameters and click Submit to plot new curves.";
+            document.getElementById('radio_validation_msg').innerHTML = "";
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSarodeChart);
+        } else {
+            initSarodeChart();
+        }
+    </script>
+</div>
