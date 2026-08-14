@@ -132,6 +132,27 @@
         </ol>
     </div>
 
+<div class="visitor-counter-container" style="font-family: sans-serif; font-size: 14px; color: #555;">
+  <span>Visits: <strong id="visitor-count">Loading...</strong></span>
+</div>
+
+<script>
+  // This will automatically increment and fetch the count for your specific page
+  // We use your domain and the path as a unique identifier
+  const namespace = "mayursarode.github.io";
+  const key = "wifi-range-calculator";
+
+  fetch(`https://abacus.jasoncameron.dev/hit/${namespace}/${key}`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('visitor-count').textContent = data.value;
+    })
+    .catch(error => {
+      console.error('Error loading counter:', error);
+      document.getElementById('visitor-count').textContent = '—';
+    });
+</script>
+
     <script>
         let sarodeChart;
         const chartColors = [
