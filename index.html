@@ -55,10 +55,10 @@
                 
                 <label for="Wi-Fi_frequency">Frequency Band:</label>
                 <select id="Wi-Fi_frequency">
-                    <option value="2.4">2.4 GHz</option>
-                    <option value="5.2" selected>5.2 GHz</option>
-                    <option value="5.8">5.8 GHz</option>
-                    <option value="6">6 GHz</option>
+                    <option value="2.437">2.437 GHz</option>
+                    <option value="5.180" selected>5.180 GHz</option>
+                    <option value="5.825">5.825 GHz</option>
+                    <option value="6.425">6.425 GHz</option>
                 </select>
             </div>
             <div class="form-group">
@@ -90,8 +90,8 @@
                 <label for="Wi-Fi_fading">Fading Margin:</label>
                 <select id="Wi-Fi_fading">
                     <option value="10">10 dB (90% Reliability)</option>
-                    <option value="20" selected>20 dB (99% Reliability)</option>
-                    <option value="30">30 dB (99.9% Reliability)</option>
+                    <option value="20" selected>20 dB (95% Reliability)</option>
+                    <option value="30">30 dB (99% Reliability)</option>
                     <option value="40">40 dB (99.99% Reliability)</option>
                 </select>
             </div>
@@ -127,7 +127,7 @@
         <ol>
             <li>These graphs are theoretical calculation for best case Wi-Fi MIMO TCP throughput.</li>
             <li>TCP throughput efficiency of 70% calculation (considering NWK/MAC and PHY losses).</li>
-            <li>Fading margin and reliability values shown in table: 10 dB (90%), 20 dB (99%), 30 dB (99.9%), 40 dB (99.99%).</li>
+            <li>Fading margin and reliability values shown in table: 10 dB (90%), 20 dB (95%), 30 dB (99%), 40 dB (99.99%).</li>
             <li>Path loss calculated by breakpoint model, n=2 up to 1m and then n=3, 3.3, or 3.5 based on environment.</li>
         </ol>
     </div>
@@ -184,13 +184,13 @@
             let f = parseFloat(freq);
             let b = parseInt(bw);
 
-            if (f === 2.4) {
+            if (f === 2.437) {
                 if (b > 40) return false;
-            } else if (f === 5.2 || f === 5.8) {
+            } else if (f === 5.180 || f === 5.825) {
                 if (std === 'n') return false;
                 if (std === 'ac' && b > 80) return false;
                 if (std === 'ax' && b > 160) return false;
-            } else if (f === 6) {
+            } else if (f === 6.425) {
                 if (std === 'n' || std === 'ac') return false;
                 if (std === 'ax' && b > 160) return false;
             }
@@ -280,7 +280,7 @@
                             type: 'linear',
                             position: 'bottom',
                             title: { display: true, text: 'RSSI (dBm)' },
-                            min: -100, max: -50,
+                            min: -95, max: -50,
                             reverse: true,
                             grid: { minor: { display: true } },
                             ticks: { minor: { display: true } }
