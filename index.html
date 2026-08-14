@@ -51,6 +51,7 @@
                     <option value="ac">802.11ac</option>
                     <option value="ax" selected>802.11ax</option>
                     <option value="be">802.11be</option>
+                    <option value="bn">802.11be</option>
                 </select>
                 
                 <label for="Wi-Fi_frequency">Frequency Band:</label>
@@ -183,7 +184,7 @@ const phyTables = {
     'bn80': { data: [{tx: 21.0, sens: -88.0, rate: 8.6}, {tx: 21.0, sens: -84.0, rate: 17.2}, {tx: 21.0, sens: -83.0, rate: 22.94}, {tx: 21.0, sens: -81.0, rate: 25.8}, {tx: 21.0, sens: -79.0, rate: 34.4}, {tx: 21.0, sens: -77.5, rate: 45.94}, {tx: 21.0, sens: -76.0, rate: 51.6}, {tx: 21.0, sens: -75.0, rate: 57.4}, {tx: 21.0, sens: -73.0, rate: 68.8}, {tx: 21.0, sens: -71.0, rate: 77.4}, {tx: 21.0, sens: -70.0, rate: 86.0}, {tx: 20.0, sens: -68.0, rate: 91.8}, {tx: 20.0, sens: -66.0, rate: 103.2}, {tx: 19.0, sens: -64.0, rate: 114.7}, {tx: 18.0, sens: -61.0, rate: 129.0}, {tx: 18.0, sens: -59.0, rate: 143.4}, {tx: 16.0, sens: -56.0, rate: 154.9}, {tx: 16.0, sens: -53.0, rate: 172.1}] },
     'bn160': { data: [{tx: 21.0, sens: -85.0, rate: 8.6}, {tx: 21.0, sens: -81.0, rate: 17.2}, {tx: 21.0, sens: -80.0, rate: 22.94}, {tx: 21.0, sens: -78.0, rate: 25.8}, {tx: 21.0, sens: -76.0, rate: 34.4}, {tx: 21.0, sens: -74.5, rate: 45.94}, {tx: 21.0, sens: -73.0, rate: 51.6}, {tx: 21.0, sens: -72.0, rate: 57.4}, {tx: 21.0, sens: -70.0, rate: 68.8}, {tx: 21.0, sens: -68.0, rate: 77.4}, {tx: 21.0, sens: -67.0, rate: 86.0}, {tx: 20.0, sens: -65.0, rate: 91.8}, {tx: 20.0, sens: -63.0, rate: 103.2}, {tx: 19.0, sens: -61.0, rate: 114.7}, {tx: 18.0, sens: -58.0, rate: 129.0}, {tx: 18.0, sens: -56.0, rate: 143.4}, {tx: 16.0, sens: -53.0, rate: 154.9}, {tx: 16.0, sens: -50.0, rate: 172.1}] },
     'bn320': { data: [{tx: 21.0, sens: -88.0, rate: 8.6}, {tx: 21.0, sens: -84.0, rate: 17.2}, {tx: 21.0, sens: -83.0, rate: 22.94}, {tx: 21.0, sens: -81.0, rate: 25.8}, {tx: 21.0, sens: -79.0, rate: 34.4}, {tx: 21.0, sens: -77.5, rate: 45.94}, {tx: 21.0, sens: -76.0, rate: 51.6}, {tx: 21.0, sens: -75.0, rate: 57.4}, {tx: 21.0, sens: -73.0, rate: 68.8}, {tx: 21.0, sens: -71.0, rate: 77.4}, {tx: 21.0, sens: -70.0, rate: 86.0}, {tx: 20.0, sens: -68.0, rate: 91.8}, {tx: 20.0, sens: -66.0, rate: 103.2}, {tx: 19.0, sens: -64.0, rate: 114.7}, {tx: 18.0, sens: -61.0, rate: 129.0}, {tx: 18.0, sens: -59.0, rate: 143.4}, {tx: 16.0, sens: -56.0, rate: 154.9}, {tx: 16.0, sens: -53.0, rate: 172.1}] }
-};
+                };
         function validateConfiguration(std, freq, bw) {
             let f = parseFloat(freq);
             let b = parseInt(bw);
