@@ -47,11 +47,11 @@
             <div class="form-group">
                 <label for="Wi-Fi_standard">Wi-Fi Standard:</label>
                 <select id="Wi-Fi_standard">
-                    <option value="n">802.11n</option>
-                    <option value="ac">802.11ac</option>
-                    <option value="ax" selected>802.11ax</option>
-                    <option value="be">802.11be</option>
-                    <option value="bn">802.11bn</option>
+                    <option value="n">(Wi-Fi4)802.11n</option>
+                    <option value="ac">(Wi-Fi5)802.11ac</option>
+                    <option value="ax" selected>(Wi-Fi6)802.11ax</option>
+                    <option value="be">(W-Fi7)802.11be</option>
+                    <option value="bn">(Wi-Fi8)802.11bn</option>
                 </select>
                 
                 <label for="Wi-Fi_frequency">Frequency Band:</label>
@@ -72,7 +72,12 @@
                     <option value="320">320 MHz</option>
                 </select>
             </div>
-
+            <div class="form-group">
+                <label for="Wi-Fi_GI">Guard Interval(GI):</label>
+                <select id="Wi-Fi_GI">
+                    <option value="0.8">0.8 usec</option>
+                </select>
+            </div>
             <h3>Channel parameters</h3>
             <div class="form-group">
                 <label for="ap_mimo">AP MIMO Streams:</label>
@@ -180,8 +185,8 @@ const phyTables = {
     'be160': { data: [{tx: 21.0, sens: -85.0, rate: 72.0}, {tx: 21.0, sens: -82.5, rate: 144.2}, {tx: 21.0, sens: -80.0, rate: 216.2}, {tx: 21.0, sens: -77.0, rate: 288.2}, {tx: 21.0, sens: -74.0, rate: 432.4}, {tx: 21.0, sens: -71.0, rate: 576.4}, {tx: 21.0, sens: -70.0, rate: 648.6}, {tx: 21.0, sens: -68.0, rate: 720.8}, {tx: 20.0, sens: -65.0, rate: 864.8}, {tx: 20.0, sens: -63.0, rate: 960.8}, {tx: 18.0, sens: -57.5, rate: 1080.8}, {tx: 18.0, sens: -54.5, rate: 1201.0}, {tx: 18.0, sens: -51.5, rate: 1297.0}, {tx: 18.0, sens: -48.5, rate: 1441.9}] },
     'be320': { data: [{tx: 21.0, sens: -82.0, rate: 144.1}, {tx: 21.0, sens: -79.5, rate: 288.2}, {tx: 21.0, sens: -77.0, rate: 432.2}, {tx: 21.0, sens: -74.0, rate: 576.5}, {tx: 21.0, sens: -71.0, rate: 864.7}, {tx: 20.0, sens: -67.0, rate: 1152.9}, {tx: 20.0, sens: -64.5, rate: 1297.1}, {tx: 20.0, sens: -62.0, rate: 1441.2}, {tx: 20.0, sens: -59.5, rate: 1729.4}, {tx: 19.0, sens: -58.5, rate: 1921.6}, {tx: 19.0, sens: -52.5, rate: 2161.8}, {tx: 18.0, sens: -51.0, rate: 2402.0}, {tx: 18.0, sens: -48.5, rate: 2594.1}, {tx: 18.0, sens: -45.5, rate: 2882.4}] },
     'bn20': { data: [{tx: 21.0, sens: -94.0, rate: 8.6}, {tx: 21.0, sens: -90.0, rate: 17.2}, {tx: 21.0, sens: -89.0, rate: 22.94}, {tx: 21.0, sens: -87.0, rate: 25.8}, {tx: 21.0, sens: -85.0, rate: 34.4}, {tx: 21.0, sens: -83.5, rate: 45.94}, {tx: 21.0, sens: -82.0, rate: 51.6}, {tx: 21.0, sens: -81.0, rate: 57.4}, {tx: 21.0, sens: -79.0, rate: 68.8}, {tx: 21.0, sens: -77.0, rate: 77.4}, {tx: 21.0, sens: -76.0, rate: 86.0}, {tx: 20.0, sens: -74.0, rate: 91.8}, {tx: 20.0, sens: -72.0, rate: 103.2}, {tx: 19.0, sens: -70.0, rate: 114.7}, {tx: 18.0, sens: -67.0, rate: 129.0}, {tx: 18.0, sens: -65.0, rate: 143.4}, {tx: 16.0, sens: -62.0, rate: 154.9}, {tx: 16.0, sens: -59.0, rate: 172.1}] },
-    'bn40': { data: [{tx: 21.0, sens: -91.0, rate: 8.6}, {tx: 21.0, sens: -87.0, rate: 17.2}, {tx: 21.0, sens: -86.0, rate: 22.94}, {tx: 21.0, sens: -84.0, rate: 25.8}, {tx: 21.0, sens: -82.0, rate: 34.4}, {tx: 21.0, sens: -80.5, rate: 45.94}, {tx: 21.0, sens: -79.0, rate: 51.6}, {tx: 21.0, sens: -78.0, rate: 57.4}, {tx: 21.0, sens: -76.0, rate: 68.8}, {tx: 21.0, sens: -74.0, rate: 77.4}, {tx: 21.0, sens: -73.0, rate: 86.0}, {tx: 20.0, sens: -71.0, rate: 91.8}, {tx: 20.0, sens: -69.0, rate: 103.2}, {tx: 19.0, sens: -67.0, rate: 114.7}, {tx: 18.0, sens: -64.0, rate: 129.0}, {tx: 18.0, sens: -62.0, rate: 143.4}, {tx: 16.0, sens: -59.0, rate: 154.9}, {tx: 16.0, sens: -56.0, rate: 172.1}] },
-    'bn80': { data: [{tx: 21.0, sens: -88.0, rate: 8.6}, {tx: 21.0, sens: -84.0, rate: 17.2}, {tx: 21.0, sens: -83.0, rate: 22.94}, {tx: 21.0, sens: -81.0, rate: 25.8}, {tx: 21.0, sens: -79.0, rate: 34.4}, {tx: 21.0, sens: -77.5, rate: 45.94}, {tx: 21.0, sens: -76.0, rate: 51.6}, {tx: 21.0, sens: -75.0, rate: 57.4}, {tx: 21.0, sens: -73.0, rate: 68.8}, {tx: 21.0, sens: -71.0, rate: 77.4}, {tx: 21.0, sens: -70.0, rate: 86.0}, {tx: 20.0, sens: -68.0, rate: 91.8}, {tx: 20.0, sens: -66.0, rate: 103.2}, {tx: 19.0, sens: -64.0, rate: 114.7}, {tx: 18.0, sens: -61.0, rate: 129.0}, {tx: 18.0, sens: -59.0, rate: 143.4}, {tx: 16.0, sens: -56.0, rate: 154.9}, {tx: 16.0, sens: -53.0, rate: 172.1}] },
+    'bn40': { data: [{tx: 21.0, sens: -91.0, rate: 17.2}, {tx: 21.0, sens: -87.0, rate: 17.2}, {tx: 21.0, sens: -86.0, rate: 22.94}, {tx: 21.0, sens: -84.0, rate: 25.8}, {tx: 21.0, sens: -82.0, rate: 34.4}, {tx: 21.0, sens: -80.5, rate: 45.94}, {tx: 21.0, sens: -79.0, rate: 51.6}, {tx: 21.0, sens: -78.0, rate: 57.4}, {tx: 21.0, sens: -76.0, rate: 68.8}, {tx: 21.0, sens: -74.0, rate: 77.4}, {tx: 21.0, sens: -73.0, rate: 86.0}, {tx: 20.0, sens: -71.0, rate: 91.8}, {tx: 20.0, sens: -69.0, rate: 103.2}, {tx: 19.0, sens: -67.0, rate: 114.7}, {tx: 18.0, sens: -64.0, rate: 129.0}, {tx: 18.0, sens: -62.0, rate: 143.4}, {tx: 16.0, sens: -59.0, rate: 154.9}, {tx: 16.0, sens: -56.0, rate: 172.1}] },
+    'bn80': { data: [{tx: 21.0, sens: -88.0, rate: 34.4}, {tx: 21.0, sens: -84.0, rate: 17.2}, {tx: 21.0, sens: -83.0, rate: 22.94}, {tx: 21.0, sens: -81.0, rate: 25.8}, {tx: 21.0, sens: -79.0, rate: 34.4}, {tx: 21.0, sens: -77.5, rate: 45.94}, {tx: 21.0, sens: -76.0, rate: 51.6}, {tx: 21.0, sens: -75.0, rate: 57.4}, {tx: 21.0, sens: -73.0, rate: 68.8}, {tx: 21.0, sens: -71.0, rate: 77.4}, {tx: 21.0, sens: -70.0, rate: 86.0}, {tx: 20.0, sens: -68.0, rate: 91.8}, {tx: 20.0, sens: -66.0, rate: 103.2}, {tx: 19.0, sens: -64.0, rate: 114.7}, {tx: 18.0, sens: -61.0, rate: 129.0}, {tx: 18.0, sens: -59.0, rate: 143.4}, {tx: 16.0, sens: -56.0, rate: 154.9}, {tx: 16.0, sens: -53.0, rate: 172.1}] },
     'bn160': { data: [{tx: 21.0, sens: -85.0, rate: 8.6}, {tx: 21.0, sens: -81.0, rate: 17.2}, {tx: 21.0, sens: -80.0, rate: 22.94}, {tx: 21.0, sens: -78.0, rate: 25.8}, {tx: 21.0, sens: -76.0, rate: 34.4}, {tx: 21.0, sens: -74.5, rate: 45.94}, {tx: 21.0, sens: -73.0, rate: 51.6}, {tx: 21.0, sens: -72.0, rate: 57.4}, {tx: 21.0, sens: -70.0, rate: 68.8}, {tx: 21.0, sens: -68.0, rate: 77.4}, {tx: 21.0, sens: -67.0, rate: 86.0}, {tx: 20.0, sens: -65.0, rate: 91.8}, {tx: 20.0, sens: -63.0, rate: 103.2}, {tx: 19.0, sens: -61.0, rate: 114.7}, {tx: 18.0, sens: -58.0, rate: 129.0}, {tx: 18.0, sens: -56.0, rate: 143.4}, {tx: 16.0, sens: -53.0, rate: 154.9}, {tx: 16.0, sens: -50.0, rate: 172.1}] },
     'bn320': { data: [{tx: 21.0, sens: -88.0, rate: 8.6}, {tx: 21.0, sens: -84.0, rate: 17.2}, {tx: 21.0, sens: -83.0, rate: 22.94}, {tx: 21.0, sens: -81.0, rate: 25.8}, {tx: 21.0, sens: -79.0, rate: 34.4}, {tx: 21.0, sens: -77.5, rate: 45.94}, {tx: 21.0, sens: -76.0, rate: 51.6}, {tx: 21.0, sens: -75.0, rate: 57.4}, {tx: 21.0, sens: -73.0, rate: 68.8}, {tx: 21.0, sens: -71.0, rate: 77.4}, {tx: 21.0, sens: -70.0, rate: 86.0}, {tx: 20.0, sens: -68.0, rate: 91.8}, {tx: 20.0, sens: -66.0, rate: 103.2}, {tx: 19.0, sens: -64.0, rate: 114.7}, {tx: 18.0, sens: -61.0, rate: 129.0}, {tx: 18.0, sens: -59.0, rate: 143.4}, {tx: 16.0, sens: -56.0, rate: 154.9}, {tx: 16.0, sens: -53.0, rate: 172.1}] }
                 };
